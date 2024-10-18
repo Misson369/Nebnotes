@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 11 & 12 NEB Notes</title>
+    <style>
+        /* General Styles */
+        body {
+            background: linear-gradient(to right, #1c92d2, #f2fcfe);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #333;
+            transition: background-color 0.5s, color 0.5s;
+            position: relative; /* For footer positioning */
+            min-height: 100vh; /* Ensure body takes full height */
+        }
+
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #f9a825, #1c92d2, #8e44ad);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: #fff;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Sidebar Menu Styling */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #0056b3;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #ffffff; /* Light color for sidebar links */
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar a:hover {
+            background-color: #004494;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 2em;
+            transition: margin-left 0.5s;
+            margin-left: 0; /* Initial margin */
+        }
+
+        section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 2em;
+            padding: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide content by default */
+        }
+
+        section.active {
+            display: block; /* Show active section */
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 1em;
+            background-color: #343a40;
+            color: white;
+            position: absolute; /* Ensure it is positioned at the bottom */
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar a {
+                font-size: 18px;
+            }
+        }
+    </style>
+    <script>
+        // JavaScript to open and close sidebar menu
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("mainContent").style.marginLeft = "250px"; // Adjust main content margin
+        }
+
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("mainContent").style.marginLeft = "0"; // Reset margin
+        }
+
+        // Show content based on the selected section
+        function showContent(sectionId) {
+            var sections = document.querySelectorAll("main > section");
+            sections.forEach(section => {
+                section.classList.remove("active"); // Hide all sections
+            });
+            document.getElementById(sectionId).classList.add("active"); // Show the selected section
+            closeSidebar(); // Close sidebar when a section is selected
+        }
+
+        // Toggle dark/light theme
+        function toggleTheme(theme) {
+            document.body.classList.toggle("dark-theme", theme === 'dark');
+
+            // Change section background color in dark mode
+            var sections = document.querySelectorAll("main > section");
+            sections.forEach(section => {
+                if (theme === 'dark') {
+                    section.style.backgroundColor = "#444"; // Dark background for sections
+                    section.style.color = "#ffffff"; // Light text color
+                } else {
+                    section.style.backgroundColor = "#ffffff"; // Light background for sections
+                    section.style.color = "#333"; // Dark text color
+                }
+            });
+
+            // Change sidebar text color based on theme
+            var sidebarLinks = document.querySelectorAll(".sidebar a");
+            sidebarLinks.forEach(link => {
+                link.style.color = (theme === 'dark') ? "#ffffff" : "#ffffff"; // Keep sidebar text color white
+            });
+        }
+
+        // Show theme options in the settings
+        function showThemeOptions() {
+            var themeOptions = document.getElementById("themeOptions");
+            themeOptions.style.display = (themeOptions.style.display === "block") ? "none" : "block";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <span class="menu-icon" onclick="openSidebar()">☰</span> <!-- Hamburger Menu on the Left -->
+        <h1>Notes Portal</h1> <!-- Title Updated -->
+    </header>
+
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeSidebar()">&times;</span>
+        <a href="javascript:void(0)" onclick="showContent('class11')">Class 11 Notes</a>
+        <a href="javascript:void(0)" onclick="showContent('model11')">Class 11 Model Questions</a>
+        <a href="javascript:void(0)" onclick="showContent('class12')">Class 12 Notes</a>
+        <a href="javascript:void(0)" onclick="showContent('model12')">Class 12 Model Questions</a>
+        <a href="javascript:void(0)" onclick="showThemeOptions()">Settings</a>
+        <div id="themeOptions" style="display: none; padding: 15px 25px; color: #ffffff;">
+            <p>Select Theme:</p>
+            <a href="javascript:void(0)" onclick="toggleTheme('light')">Light Theme</a>
+            <a href="javascript:void(0)" onclick="toggleTheme('dark')">Dark Theme</a>
+        </div>
+    </div>
+
+    <main id="mainContent">
+        <section id="class11">
+            <h2>Class 11 Notes</h2>
+            <p>Explore detailed notes and resources for Class 11 subjects.</p>
+        </section>
+
+        <section id="model11">
+            <h2>Class 11 Model Questions</h2>
+            <p>Practice model questions for Class 11 exams.</p>
+        </section>
+
+        <section id="class12">
+            <h2>Class 12 Notes</h2>
+            <p>Find notes for Class 12 subjects to help you prepare for exams.</p>
+        </section>
+
+        <section id="model12">
+            <h2>Class 12 Model Questions</h2>
+            <p>Test your knowledge with Class 12 model questions.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Class 11 & 12 NEB Notes. All rights reserved.</p>
+    </footer>
+</body>
+</html>
